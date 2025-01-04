@@ -1,0 +1,73 @@
+const dishData = [
+    {
+        name: "Italian pasta",
+        price: 9.55
+    },
+    {
+        name: "Rice with veggies",
+        price: 8.65
+    },
+    {
+        name: "Chicken with potatoes",
+        price: 15.55
+    },
+    {
+        name: "Vegetarian Pizza",
+        price: 6.45
+    }
+];
+
+const tax = 1.20;
+
+// Step 1: Define the getPrices function
+function getPrices(taxBoolean) {
+    // Step 2: Loop through the dishData array
+    for (let i = 0; i < dishData.length; i++) {
+        // Step 3: Declare finalPrice variable
+        let finalPrice;
+
+        // Step 4: Check if taxBoolean is true
+        if (taxBoolean === true) {
+            finalPrice = dishData[i].price * tax;  // Apply tax
+        } 
+        // Step 5: Check if taxBoolean is false
+        else if (taxBoolean === false) {
+            finalPrice = dishData[i].price;  // No tax, just the price
+        } 
+        // Step 6: Else condition for invalid taxBoolean
+        else {
+            console.log("You need to pass a boolean to the getPrices call!");
+            return;
+        }
+
+        // Step 7: Log the dish and price information
+        console.log("Dish: " + dishData[i].name + " Price: $" + finalPrice.toFixed(2));
+    }
+}
+
+// Step 8: Define the getDiscount function
+function getDiscount(taxBoolean, guests) {
+    // Step 9: Invoke getPrices with taxBoolean
+    getPrices(taxBoolean);
+
+    // Step 10: Check if guests is a number and within the valid range
+    if (typeof guests === 'number' && guests > 0 && guests < 30) {
+        // Step 11: Calculate discount based on the number of guests
+        let discount = 0;
+        if (guests < 5) {
+            discount = 5;  // Small discount for fewer guests
+        } else if (guests >= 5) {
+            discount = 10;  // Bigger discount for 5 or more guests
+        }
+        console.log('Discount is: $' + discount);
+    } else {
+        // Step 12: Handle invalid guests parameter
+        console.log('The second argument must be a number between 0 and 30');
+    }
+}
+
+// Example calls to the getDiscount function
+getDiscount(true, 2); // This will calculate the price with tax and apply a small discount
+getDiscount(false, 10); // This will calculate the price without tax and apply a larger discount
+getDiscount(true, 35); // This will print an error because guests > 30
+getDiscount('yes', 10); // This will print an error because taxBoolean is not a boolean
